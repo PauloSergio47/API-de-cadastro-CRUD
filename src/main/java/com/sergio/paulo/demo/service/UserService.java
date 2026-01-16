@@ -4,6 +4,8 @@ import com.sergio.paulo.demo.Entity.User;
 import com.sergio.paulo.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -19,6 +21,13 @@ public class UserService {
 
     public User obterUsuarioPorId(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+    public User atualizarUsuario(User user) {
+        return userRepository.save(user);
+    }
+
+    public List<User> listarUsuario(Long id) {
+        return userRepository.findAll();
     }
 
     public void deletarUsuario(Long id) {

@@ -6,6 +6,8 @@ import com.sergio.paulo.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -21,14 +23,30 @@ public class UserController {
         return ResponseEntity.ok(novoUsuario);
     }
 
-    @PostMapping
-    public ResponseEntity<User> atualizarUsuario(@RequestBody User user) {
-        User usuarioAtualizado = userService.criarUsuario(user);
+    @GetMapping
+    public ResponseEntity<List<User>> listarUsuarios() {
+        List<User> usuarios = userService.listarUsuario(null);
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> obterUsuarioPorId(@PathVariable Long id) {
+        User usuario = userService.obterUsuarioPorId(id);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> atualizarUsuario(@PathVariable User user) {
+        User usuarioAtualizado = userService.atualizarUsuario(user);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletarUsuario(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         userService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }

@@ -4,21 +4,22 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "Users", schema = "public")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @NotNull(message = "Nome é obrigatório!")
-    @Column(name = "name", length = 100, nullable = false)
-    private String name;
+    @Column(name = "nome", length = 100, nullable = false)
+    private String nome;
 
     @NotNull(message = "Email é obrigatório!")
     @Column(name = "email", length = 250, nullable = false)
